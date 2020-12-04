@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
+	"io"
 	"log"
-	"os"
-	"strconv"
 )
 
 var Err2020NotFound = errors.New("couldn't find numbers that summed give 2020")
@@ -72,16 +70,16 @@ func main() {
 }
 
 func readNumbers() (numbers []int) {
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		number, err := strconv.Atoi(scanner.Text())
+	var number int
+	for {
+		_, err := fmt.Scan(&number)
 		if err != nil {
-			log.Fatalf("%s, error: %q", ErrNotANumber, err)
+			if err != io.EOF {
+				log.Fatalf("%s, error: %q", ErrNotANumber, err)
+			}
+			break
 		}
 		numbers = append(numbers, number)
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
 	return
 }
