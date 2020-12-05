@@ -9,6 +9,14 @@ type Password struct {
 	MaxLetterOccurrences int
 }
 
+func (p Password) IsValid() bool {
+	LetterOccurrences := strings.Count(p.Value, p.ContainsLetter)
+	if LetterOccurrences >= p.MinLetterOccurrences && LetterOccurrences <= p.MaxLetterOccurrences {
+		return true
+	}
+	return false
+}
+
 func main() {
 
 }
