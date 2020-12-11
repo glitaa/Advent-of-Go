@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -25,6 +26,16 @@ func (p Password) IsValid() bool {
 }
 
 func main() {
+	passwords := readPasswordsFromFile("input.txt")
+
+	validPasswordsCount := 0
+	for _, password := range passwords {
+		if password.IsValid() {
+			validPasswordsCount++
+		}
+	}
+
+	fmt.Println(validPasswordsCount)
 }
 
 func readPasswordsFromFile(path string) (passwords []Password) {
