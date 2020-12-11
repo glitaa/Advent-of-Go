@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func TestReviewPassword(t *testing.T) {
+func TestOldPolicyValidation(t *testing.T) {
 
 	passwordTests := []struct {
 		name     string
@@ -16,7 +16,7 @@ func TestReviewPassword(t *testing.T) {
 
 	for _, test := range passwordTests {
 		t.Run(test.name, func(t *testing.T) {
-			got := test.password.IsValid()
+			got := test.password.OldPolicyValidation()
 			if got != test.valid {
 				t.Errorf("%#v got %t want %t", test.password, got, test.valid)
 			}

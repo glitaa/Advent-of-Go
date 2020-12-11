@@ -17,7 +17,7 @@ type Password struct {
 	MaxLetterOccurrences int
 }
 
-func (p Password) IsValid() bool {
+func (p Password) OldPolicyValidation() bool {
 	LetterOccurrences := strings.Count(p.Value, p.ContainsLetter)
 	return LetterOccurrences >= p.MinLetterOccurrences && LetterOccurrences <= p.MaxLetterOccurrences
 }
@@ -27,12 +27,12 @@ func main() {
 
 	validPasswordsCount := 0
 	for _, password := range passwords {
-		if password.IsValid() {
+		if password.OldPolicyValidation() {
 			validPasswordsCount++
 		}
 	}
 
-	fmt.Println(validPasswordsCount)
+	fmt.Println("Number of passwords validated with the old policy:", validPasswordsCount)
 }
 
 func readPasswordsFromFile(path string) (passwords []Password) {
