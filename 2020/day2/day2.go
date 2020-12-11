@@ -22,6 +22,10 @@ func (p Password) OldPolicyValidation() bool {
 	return LetterOccurrences >= p.FirstPosition && LetterOccurrences <= p.SecondPosition
 }
 
+func (p Password) NewPolicyValidation() bool {
+	return (p.Value[p.FirstPosition-1] == p.ContainsLetter) != (p.Value[p.SecondPosition-1] == p.ContainsLetter)
+}
+
 func main() {
 	passwords := readPasswordsFromFile("input.txt")
 
