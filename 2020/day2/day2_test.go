@@ -9,9 +9,9 @@ func TestOldPolicyValidation(t *testing.T) {
 		password Password
 		valid    bool
 	}{
-		{name: "valid", password: Password{Value: "abcde", ContainsLetter: "a", FirstPosition: 1, SecondPosition: 3}, valid: true},
-		{name: "invalid", password: Password{Value: "cdefg", ContainsLetter: "b", FirstPosition: 1, SecondPosition: 3}, valid: false},
-		{name: "valid", password: Password{Value: "ccccccccc", ContainsLetter: "c", FirstPosition: 2, SecondPosition: 9}, valid: true},
+		{name: "valid", password: Password{Value: "abcde", ContainsLetter: 'a', FirstPosition: 1, SecondPosition: 3}, valid: true},
+		{name: "invalid", password: Password{Value: "cdefg", ContainsLetter: 'b', FirstPosition: 1, SecondPosition: 3}, valid: false},
+		{name: "valid", password: Password{Value: "ccccccccc", ContainsLetter: 'c', FirstPosition: 2, SecondPosition: 9}, valid: true},
 	}
 
 	for _, test := range passwordTests {
