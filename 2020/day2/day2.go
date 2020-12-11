@@ -35,8 +35,15 @@ func main() {
 			validPasswordsCount++
 		}
 	}
-
 	fmt.Println("Number of passwords validated with the old policy:", validPasswordsCount)
+
+	validPasswordsCount = 0
+	for _, password := range passwords {
+		if password.NewPolicyValidation() {
+			validPasswordsCount++
+		}
+	}
+	fmt.Println("Number of passwords validated with the new policy:", validPasswordsCount)
 }
 
 func readPasswordsFromFile(path string) (passwords []Password) {
