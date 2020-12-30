@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -9,6 +10,11 @@ import (
 	"strconv"
 	"strings"
 )
+
+var ErrCannotOpenFile = errors.New("could not open the input file")
+var ErrCannotConvert = errors.New("could not convert given string to int")
+
+const REGEX_SCANNER_PATTERN = "-|\\s|:\\s"
 
 type Password struct {
 	Value          string
@@ -27,7 +33,10 @@ func (p Password) NewPolicyValidation() bool {
 }
 
 func main() {
-	passwords := readPasswordsFromFile("input.txt")
+	passwords, err := readPasswordsFromFile("input.txt")
+	if err != nil {
+		log.Println(err)
+	}
 
 	validPasswordsCount := 0
 	for _, password := range passwords {
@@ -46,27 +55,38 @@ func main() {
 	fmt.Println("Number of passwords validated with the new policy:", validPasswordsCount)
 }
 
-func readPasswordsFromFile(path string) (passwords []Password) {
+func readPasswordsFromFile(path string) (passwords []Password, readErr error) {
 	file, err := os.Open(path)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return nil, ErrCannotOpenFile
 	}
 	defer file.Close()
 
-	re := regexp.MustCompile("-|\\s|:\\s")
+	re := regexp.MustCompile(REGEX_SCANNER_PATTERN)
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		var password Password
-		password.FirstPosition, _ = strconv.Atoi(re.Split(scanner.Text(), -1)[0])
-		password.SecondPosition, _ = strconv.Atoi(re.Split(scanner.Text(), -1)[1])
+		password.FirstPosition, err = strconv.Atoi(re.Split(scanner.Text(), -1)[0])
+		if err != nil {
+			fmt.Println(err)
+			readErr = ErrCannotConvert
+			continue
+		}
+		password.SecondPosition, err = strconv.Atoi(re.Split(scanner.Text(), -1)[1])
+		if err != nil {
+			fmt.Println(err)
+			readErr = ErrCannotConvert
+			continue
+		}
 		password.ContainsLetter = []byte(re.Split(scanner.Text(), -1)[2])[0]
 		password.Value = re.Split(scanner.Text(), -1)[3]
 		passwords = append(passwords, password)
 	}
 
 	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return passwords
+	return
 }
