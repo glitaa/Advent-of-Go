@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 type Slope [][]byte
 
 func (s Slope) Check() (trees int) {
@@ -11,6 +13,14 @@ func (s Slope) Check() (trees int) {
 		}
 	}
 	return
+}
+
+func MakeSlope(str string) (slope Slope) {
+	rows := strings.Split(str, "\n")
+	for _, row := range rows {
+		slope = append(slope, []byte(row))
+	}
+	return slope
 }
 
 func main() {

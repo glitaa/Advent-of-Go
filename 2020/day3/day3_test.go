@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestSlopeCheck(t *testing.T) {
 
@@ -15,4 +18,12 @@ func TestSlopeCheck(t *testing.T) {
 		t.Errorf("got %d want %d", got, want)
 	}
 
+}
+
+func TestMakeSlope(t *testing.T) {
+	got := MakeSlope("..##.......\n#...#...#..")
+	want := Slope{{'.', '.', '#', '#', '.', '.', '.', '.', '.', '.', '.'}, {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.'}}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %c want %c", got, want)
+	}
 }
