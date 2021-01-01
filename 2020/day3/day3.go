@@ -1,6 +1,11 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"strings"
+)
 
 type Slope [][]byte
 
@@ -24,4 +29,14 @@ func MakeSlope(str string) (slope Slope) {
 }
 
 func main() {
+	input, err := ioutil.ReadFile("input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	slope := MakeSlope(string(input))
+
+	trees := slope.Check()
+
+	fmt.Println("Number of trees on the slope:", trees)
 }
