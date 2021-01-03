@@ -21,7 +21,7 @@ func (s Slope) Check() (trees int) {
 }
 
 func MakeSlope(str string) (slope Slope) {
-	rows := strings.Split(str, "\n")
+	rows := strings.Split(strings.Replace(str, "\r\n", "\n", -1), "\n")
 	for _, row := range rows {
 		slope = append(slope, []byte(row))
 	}
