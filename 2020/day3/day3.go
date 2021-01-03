@@ -9,11 +9,11 @@ import (
 
 type Slope [][]byte
 
-func (s Slope) Check() (trees int) {
+func (s Slope) Check(right, down int) (trees int) {
 	x := 0
-	for y := 1; y < len(s); y++ {
-		x += 3
-		if s[y][x%(len(s[0])-1)] == '#' {
+	for y := down; y < len(s); y += down {
+		x += right
+		if s[y][x%len(s[0])] == '#' {
 			trees++
 		}
 	}
@@ -39,7 +39,7 @@ func main() {
 
 	slope := MakeSlope(string(input))
 
-	trees := slope.Check()
+	trees := slope.Check(3, 1)
 
 	fmt.Println("Number of trees on the slope:", trees)
 }

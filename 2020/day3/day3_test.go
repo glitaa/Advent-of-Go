@@ -11,11 +11,25 @@ func TestSlopeCheck(t *testing.T) {
 
 	slope := MakeSlope(input)
 
-	got := slope.Check()
-	want := 7
+	checkTests := []struct {
+		right int
+		down  int
+		trees int
+	}{
+		{right: 1, down: 1, trees: 2},
+		{right: 3, down: 1, trees: 7},
+		{right: 5, down: 1, trees: 3},
+		{right: 7, down: 1, trees: 4},
+		{right: 1, down: 2, trees: 2},
+	}
 
-	if got != want {
-		t.Errorf("got %d want %d", got, want)
+	for _, tt := range checkTests {
+		t.Run("Slope check", func(t *testing.T) {
+			got := slope.Check(tt.right, tt.down)
+			if got != tt.trees {
+				t.Errorf("right %d, down %d, got %d want %d", tt.right, tt.down, got, tt.trees)
+			}
+		})
 	}
 
 }
