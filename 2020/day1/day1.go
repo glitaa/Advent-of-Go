@@ -1,14 +1,21 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"log"
 )
 
-var Err2020NotFound = errors.New("couldn't find numbers that summed give 2020")
-var ErrNotANumber = errors.New("didn't get a number but wanted one")
+const (
+	Err2020NotFound = Year2020Error("couldn't find numbers that summed give 2020")
+	ErrNotANumber   = Year2020Error("didn't get a number but wanted one")
+)
+
+type Year2020Error string
+
+func (e Year2020Error) Error() string {
+	return string(e)
+}
 
 type Year2020 struct {
 	Multiplication int
