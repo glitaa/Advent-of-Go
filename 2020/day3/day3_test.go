@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+func TestMakeSlope(t *testing.T) {
+	got := MakeSlope("..##.......\n#...#...#..")
+	want := Slope{{'.', '.', '#', '#', '.', '.', '.', '.', '.', '.', '.'}, {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.'}}
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %c want %c", got, want)
+	}
+}
+
 func TestSlopeCheck(t *testing.T) {
 
 	input := "..##.......\n#...#...#..\n.#....#..#.\n..#.#...#.#\n.#...##..#.\n..#.##.....\n.#.#.#....#\n.#........#\n#.##...#...\n#...##....#\n.#..#...#.#"
@@ -32,12 +40,4 @@ func TestSlopeCheck(t *testing.T) {
 		})
 	}
 
-}
-
-func TestMakeSlope(t *testing.T) {
-	got := MakeSlope("..##.......\n#...#...#..")
-	want := Slope{{'.', '.', '#', '#', '.', '.', '.', '.', '.', '.', '.'}, {'#', '.', '.', '.', '#', '.', '.', '.', '#', '.', '.'}}
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %c want %c", got, want)
-	}
 }
