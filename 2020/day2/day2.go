@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -11,8 +10,16 @@ import (
 	"strings"
 )
 
-var ErrCannotOpenFile = errors.New("could not open the input file")
-var ErrCannotConvert = errors.New("could not convert given string to int")
+const (
+	ErrCannotOpenFile = ReadError("could not open the input file")
+	ErrCannotConvert  = ReadError("could not convert given string to int")
+)
+
+type ReadError string
+
+func (e ReadError) Error() string {
+	return string(e)
+}
 
 const REGEX_SCANNER_PATTERN = "-|\\s|:\\s"
 
